@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>InSilent</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="libs/ionicons/ionicons.min.css">
+        <link rel="stylesheet" href="libs/jquery-custom-content-scroller/jquery.mCustomScrollbar.css">
+        <link rel="stylesheet" href="libs/alertify/alertify.core.css">
+        <link rel="stylesheet" href="libs/alertify/alertify.default.css">
+        <link rel="stylesheet" href="libs/selectize/selectize.css">
+        <link rel="stylesheet" href="libs/selectize/selectize.default.css">
+        <link rel="stylesheet" href="libs/jcrop/jquery.Jcrop.min.css">
+        <link rel="stylesheet" href="libs/highlight/styles/default.css">
+        <link rel="stylesheet" href="main.css">
+    </head>
+    <body>
+        <!-- splash -->
+        <div id="splash" class="fullscreen logo"><div><span class="ion-speakerphone"></span>InSilent</div></div>
+    
+        <!-- login -->
+        <div id="login" class="fullscreen">
+            <div>
+                <div class="logo">InSilent</div>
+                <div class="error"></div>
+                <input type="password" class="password" placeholder="{lang.login_password}">
+                <input class="save" type="button" value="{lang.login_submit}" /> <span class="reset">{lang.login_reset_key}</span>
+            </div>
+        </div>
+    
+        <!-- left menue -->
+        <div id="nav">
+
+            <!-- header -->
+            <div class="heading">
+                <img class = "logoMain" src="favicon.png"  style="width:100;height:100px;">
+                <span class="version"></span>
+            </div>
+
+            <!-- contact list -->
+            <div id="contacts-wrapper">
+                <ul class="contacts">
+
+                </ul>
+            </div>
+
+            <!-- dragger for resizing rooms -->
+            <div id="rooms-dragger"></div>
+
+            <!-- rooms -->
+            <div id="rooms">
+                <h1>{lang.nav_rooms} <span id="rooms-add" class="ion-plus-round"></span></h1>
+
+                <div id="rooms-wrapper">
+                    <ul class="rooms">
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- dragger for resizing rooms -->
+        <div id="nav-dragger"></div>
+
+        <!-- chat area -->
+        <div id="main">
+            <!-- chat header -->
+            <div id="main-header">
+
+                <!-- new version -->
+                <div id="newversion">
+
+                </div>
+
+                <!-- metadata of current chat -->
+                <div id="main-metadata">
+                    <img src="" class="avatar" />
+                    <span>Name</span>
+                    <span class="online"></span>
+                </div>
+                
+                <!-- buttons -->
+                <div id="open-conversations-menue">
+                    <div class="unread"></div>
+                    <div class="icon ion-earth"></div>
+                </div>
+                <div id="key-menue" class="ion-checkmark"></div>
+                <div id="main-menue" class="ion-navicon-round"></div>
+                <div id="main-close" class="ion-close-round"></div>
+                
+                <!-- main menue -->
+                <ul id="main-menue-dropdown">
+                    <li id="main-menue-avatar-croper">
+                        <input class="save" type="button" value="speichern" /> <input class="cancel" type="button" value="abbrechen" />
+                    </li>
+                    <li id="main-menue-status"><span class="ion-checkmark-round"></span> {lang.menue_show_status_messages}</li>
+                    <li id="main-menue-avatar"><span class="ion-image"></span> {lang.menue_set_new_avatar}</li>
+                    <li id="main-menue-remove-avatar"><span class="ion-trash-a"></span> {lang.menue_remove_avatar}</li>
+                    <li id="main-menue-about"><span class="ion-information-circled"></span> {lang.menue_about_sum}</li>
+                    <li id="main-menue-quit"><span class="ion-android-exit"></span> {lang.menue_quit}</li>
+                </ul>
+                
+                <!-- key menue -->
+                <ul id="key-menue-dropdown">
+                    <!-- enable key management -->
+                    <li id="key-menue-enable">
+                        <p>{lang.menue_key_enable}</p>
+                        <input class="save" type="button" value="{lang.menue_key_enable_save}" />
+                    </li>
+                    
+                    <!-- enable key management password input -->
+                    <li id="key-menue-enable-container">
+                        <p>{lang.menue_key_enable_password}</p>
+                        <label>{lang.menue_key_password}</label> <input type="password" class="password" />
+                        <label>{lang.menue_key_password_again}</label> <input type="password"  class="password-again" />
+                        <input class="save" type="button" value="{lang.menue_key_enable_password_save}" /> <input class="cancel" type="button" value="{lang.menue_key_cancel}" />
+                    </li>
+                    
+                    <!-- manage keys -->
+                    <li id="key-menue-manage-container">
+                        <p>{lang.menue_key_manage}</p>
+                        <select id="key-menue-keys" multiple="multiple">
+                        </select>
+                        <input class="save" type="button" value="{lang.menue_key_manage_add}" /> <input class="remove" type="button" value="{lang.menue_key_manage_remove}" /> <input class="cancel" type="button" value="{lang.menue_key_back}" />
+                    </li>
+                    
+                    <!-- change password -->
+                    <li id="key-menue-password-container">
+                        <p>{lang.menue_key_password_change}</p>
+                        <label>{lang.menue_key_password_old}</label> <input type="password" class="old-password" />
+                        <label>{lang.menue_key_password_new}</label> <input type="password" class="new-password" />
+                        <label>{lang.menue_key_password_new_again}</label> <input type="password"  class="new-password-again" />
+                        <input class="save" type="button" value="{lang.menue_key_save}" /> <input class="cancel" type="button" value="{lang.menue_key_cancel}" />
+                    </li>
+                    
+                    <!-- reset key -->
+                    <li id="key-menue-reset-container">
+                        <p>{lang.menue_key_reset}</p>
+                        <label>{lang.menue_key_password_new}</label> <input type="password" class="new-password" />
+                        <label>{lang.menue_key_password_new_again}</label> <input type="password"  class="new-password-again" />
+                        <input class="save" type="button" value="{lang.menue_key_reset_save}" /> <input class="cancel" type="button" value="{lang.menue_key_cancel}" />
+                    </li>
+                                        
+                    <!-- share public key -->
+                    <li id="key-menue-share-container">
+                        <p>{lang.menue_key_share}</p>
+                        <input class="save" type="button" value="{lang.menue_key_save}" /> <input class="cancel" type="button" value="{lang.menue_key_cancel}" />
+                    </li>
+                    
+                    <!-- export key -->
+                    <li id="key-menue-export-container">
+                        <p>{lang.menue_key_export}</p>
+                        <input class="save" type="button" value="{lang.menue_key_save}" /> <input class="cancel" type="button" value="{lang.menue_key_cancel}" />
+                    </li>
+                    
+                    <!-- import key -->
+                    <li id="key-menue-import-container">
+                        <p>{lang.menue_key_import}</p>
+                        <label>{lang.menue_key_password}</label> <input type="password" class="password" />
+                        <input class="save" type="button" value="{lang.menue_key_import_save}" /> <input class="cancel" type="button" value="{lang.menue_key_cancel}" />
+                    </li>
+                    
+                    <!-- disable key managmement -->
+                    <li id="key-menue-disable-container">
+                        <p>{lang.menue_key_disable}</p>
+                        <input class="save" type="button" value="{lang.menue_key_disable_save}" /> <input class="cancel" type="button" value="{lang.menue_key_cancel}" />
+                    </li>
+                                        
+                    <!-- menue -->
+                    <li id="key-menue-manage" class="menue"><span class="ion-key"></span> {lang.menue_key_entry_manage}</li>
+                    <li id="key-menue-password" class="menue"><span class="ion-edit"></span> {lang.menue_key_entry_password}</li>
+                    <li id="key-menue-reset" class="menue"><span class="ion-refresh"></span> {lang.menue_key_entry_reset}</li>
+                    <li id="key-menue-share" class="menue"><span class="ion-share"></span> {lang.menue_key_entry_share}</li>
+                    <li id="key-menue-export" class="menue"><span class="ion-arrow-left-c"></span> {lang.menue_key_entry_export}</li>
+                    <li id="key-menue-import" class="menue"><span class="ion-arrow-right-c"></span> {lang.menue_key_entry_import}</li>
+                    <li id="key-menue-disable" class="menue"><span class="ion-close"></span> {lang.menue_key_entry_disable}</li>
+                </ul>
+                
+                <!-- message menue dropdown -->
+                <div id="open-conversations-menue-dropdown">
+                    <ul class="openconversations"></ul>
+                </div>
+            </div>
+
+            <!-- chat conversation -->
+            <div id="content-wrapper">
+                <ul id="content">
+
+                </ul>
+            </div>
+
+            <!-- input area for new messages -->
+            <div id="message">
+                <!-- emoticons popup -->
+                <div id="message-emoticons"></div>
+
+                <!-- input area -->
+                <div id="message-input">
+                    <!-- button: inserting code -->
+                    <div id="message-add-menue" class="ion-share"></div>
+
+                    <!-- input field/text -->
+                    <input type="text" id="message-input-textfield" placeholder="{lang.message_input_placeholder}" />
+
+                    <!-- button: show/hide emoticons popup -->
+                    <div id="message-toggleemots" class="ion-happy-outline"></div>
+
+                    <!-- send message -->
+                    <div id="message-send" class="ion-paper-airplane"></div>
+
+                    <!-- popup for inserting poll -->
+                    <div id="message-add-poll-box">
+                        <div>
+                            <input id="message-add-poll-box-question" type="text" class="selectize-input" placeholder="{lang.message_poll_question}" />
+
+                            <input id="message-add-poll-box-multioptions" type="checkbox" /> {lang.message_poll_multioptions}
+
+                            <label>{lang.message_poll_answers}</label>
+                            <ul id="message-add-poll-box-answers">
+                                <li><input type="text" class="selectize-input" value="Antwort 1" /> <span class="remove ion-close-round"></span></li>
+                                <li><input type="text" class="selectize-input" value="Antwort 2" /> <span class="ion-close-round"></span></li>
+                                <li><input type="text" class="selectize-input" value="Antwort 3" /> <span class="ion-close-round"></span></li>
+                                <li class="add"><span class="ion-plus-round"></span> {lang.message_poll_add_answer}</li>
+                            </ul>
+
+                            <input id="message-add-poll-box-send" class="save" type="button" value="{lang.message_codebox_send}" /> <input id="message-add-poll-box-cancel" class="cancel" type="button" value="{lang.message_codebox_cancel}" />
+                        </div>
+                    </div>
+
+                    <!-- popup for inserting code -->
+                    <div id="message-add-code-box">
+                        <div id="message-add-code-box-select"><select id="message-add-code-box-language" placeholder="{lang.message_codebox_placeholder}"></select></div>
+
+                        <textarea id="message-add-code-box-area"></textarea>
+
+                        <input id="message-add-code-box-send" class="save" type="button" value="{lang.message_codebox_send}" /> <input id="message-add-code-box-cancel" class="cancel" type="button" value="{lang.message_codebox_cancel}" />
+                    </div>
+
+                    <!-- menue for inserting code, files, ... -->
+                    <ul id="message-add-menue-dropdown">
+                        <li id="message-add-menue-code"><span class="ion-code-working"></span> {lang.menue_message_code}</li>
+                        <li id="message-add-menue-file"><span class="ion-document"></span> {lang.menue_message_file}</li>
+                        <li id="message-add-menue-poll"><span class="ion-stats-bars"></span> {lang.menue_message_poll}</li>
+                        <li id="message-add-menue-clear"><span class="ion-trash-b"></span> {lang.menue_message_clear}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        
+        <!-- javascripts -->
+        <script src="libs/nw-desktop-notifications/nw-desktop-notifications.js"></script>
+        <script src="libs/alertify/alertify.min.js"></script>
+        <script src="libs/string-escape.js"></script>
+        <script src="libs/class.js"></script>
+        <script src="libs/injector.js"></script>
+        <script src="libs/jquery-2.1.0.min.js"></script>
+        <script src="libs/jquery-custom-content-scroller/jquery.mousewheel.min.js"></script>
+        <script src="libs/jquery-custom-content-scroller/jquery.mCustomScrollbar.min.js"></script>
+        <script src="libs/jcrop/jquery.Jcrop.min.js"></script>
+        <script src="libs/selectize/selectize.js"></script>
+        <script src="libs/highlight/highlight.pack.js"></script>
+        <script src="libs/jquery.waitforimages/jquery.waitforimages.js"></script>
+        <script src="libs/draggabilly.pkgd.min.js"></script>
+
+        <script src="lang/en.js"></script>
+        <script src="sum-init.js"></script>
+        <script src="sum-emoticons.js"></script>
+        <script src="sum-backend.js"></script>
+        <script src="sum-backend-userlist-file.js"></script>
+        <script src="sum-backend-userlist-web.js"></script>
+        <script src="sum-backend-helpers.js"></script>
+        <script src="sum-backend-client.js"></script>
+        <script src="sum-backend-server.js"></script>
+        <script src="sum-backend-storage.js"></script>
+        <script src="sum-backend-crypto.js"></script>
+        <script src="sum-backend-filesystem.js"></script>
+        <script src="sum-frontend.js"></script>
+        <script src="sum-frontend-helpers.js"></script>
+        <script src="sum-frontend-events.js"></script>
+        <script src="sum-frontend-messages.js"></script>
+        <script src="sum-frontend-command.js"></script>
+    </body>
+</html>
